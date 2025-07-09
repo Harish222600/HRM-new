@@ -78,13 +78,12 @@ const userSchema = new mongoose.Schema({
     }
   },
   department: {
-    type: String,
-    trim: true,
-    maxlength: [100, 'Department name cannot exceed 100 characters']
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Department'
   },
-  teamName: {
-    type: String,
-    trim: true
+  team: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team'
   },
   reportingManager: {
     type: mongoose.Schema.Types.ObjectId,
@@ -93,6 +92,27 @@ const userSchema = new mongoose.Schema({
   joiningDate: {
     type: Date,
     default: Date.now
+  },
+  designation: {
+    type: String,
+    trim: true,
+    maxlength: [100, 'Designation cannot exceed 100 characters']
+  },
+  workLocation: {
+    type: String,
+    enum: ['Office', 'Remote', 'Hybrid'],
+    default: 'Office'
+  },
+  employmentType: {
+    type: String,
+    enum: ['Full-time', 'Part-time', 'Contract', 'Internship'],
+    default: 'Full-time'
+  },
+  probationEndDate: {
+    type: Date
+  },
+  confirmationDate: {
+    type: Date
   },
   
   // Emergency Contact

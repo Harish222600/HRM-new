@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const TopNavBar = () => {
+const TopNavBar = ({ onToggleSidebar }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -62,19 +62,108 @@ const TopNavBar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm fixed-top">
       <div className="container-fluid">
+        {/* Sidebar Toggle Button */}
+        <button 
+          className="btn btn-outline-light me-3 d-lg-none"
+          onClick={onToggleSidebar}
+          type="button"
+        >
+          <i className="bi bi-list"></i>
+        </button>
+
         {/* Brand/Logo */}
         <div className="navbar-brand d-flex align-items-center">
           <i className="bi bi-building me-2" style={{ fontSize: '1.5rem' }}></i>
           <span className="fw-bold">HRM System</span>
         </div>
 
-        {/* Spacer to push profile to the right */}
-        <div className="flex-grow-1"></div>
+        {/* Search Bar - Hidden on small screens */}
+        <div className="d-none d-md-flex flex-grow-1 mx-4">
+          <div className="input-group" style={{ maxWidth: '400px' }}>
+            <input 
+              type="text" 
+              className="form-control" 
+              placeholder="Search employees, departments..."
+              style={{ 
+                backgroundColor: 'rgba(255,255,255,0.1)', 
+                border: 'none', 
+                color: 'white',
+                '::placeholder': { color: 'rgba(255,255,255,0.7)' }
+              }}
+            />
+            <button className="btn btn-outline-light" type="button">
+              <i className="bi bi-search"></i>
+            </button>
+          </div>
+        </div>
 
-        {/* Profile Section */}
-        <div className="navbar-nav">
+        {/* Notifications and User Menu */}
+        <div className="navbar-nav d-flex flex-row align-items-center">
+          {/* Notifications */}
+          <div className="nav-item dropdown me-3">
+            <button
+              className="btn btn-outline-light position-relative"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i className="bi bi-bell"></i>
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                3
+                <span className="visually-hidden">unread notifications</span>
+              </span>
+            </button>
+            <ul className="dropdown-menu dropdown-menu-end" style={{ minWidth: '300px' }}>
+              <li><h6 className="dropdown-header">Notifications</h6></li>
+              <li>
+                <a className="dropdown-item" href="#">
+                  <div className="d-flex">
+                    <div className="flex-shrink-0">
+                      <i className="bi bi-calendar-check text-success"></i>
+                    </div>
+                    <div className="flex-grow-1 ms-2">
+                      <div className="fw-semibold">Leave Approved</div>
+                      <small className="text-muted">Your leave request has been approved</small>
+                      <div className="text-muted small">2 hours ago</div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a className="dropdown-item" href="#">
+                  <div className="d-flex">
+                    <div className="flex-shrink-0">
+                      <i className="bi bi-person-plus text-info"></i>
+                    </div>
+                    <div className="flex-grow-1 ms-2">
+                      <div className="fw-semibold">New Employee</div>
+                      <small className="text-muted">John Doe joined the team</small>
+                      <div className="text-muted small">1 day ago</div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a className="dropdown-item" href="#">
+                  <div className="d-flex">
+                    <div className="flex-shrink-0">
+                      <i className="bi bi-clock text-warning"></i>
+                    </div>
+                    <div className="flex-grow-1 ms-2">
+                      <div className="fw-semibold">Training Reminder</div>
+                      <small className="text-muted">React Training starts tomorrow</small>
+                      <div className="text-muted small">2 days ago</div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li><hr className="dropdown-divider" /></li>
+              <li><a className="dropdown-item text-center" href="#">View all notifications</a></li>
+            </ul>
+          </div>
+
+          {/* Profile Section */}
           <div className="nav-item dropdown" ref={dropdownRef}>
             <button
               className="btn btn-link nav-link dropdown-toggle d-flex align-items-center text-white text-decoration-none p-2"
@@ -103,7 +192,7 @@ const TopNavBar = () => {
                 )}
               </div>
               
-              {/* User Info */}
+              {/* User Info - Hidden on small screens */}
               <div className="d-none d-md-block text-start me-2">
                 <div className="fw-semibold" style={{ fontSize: '14px', lineHeight: '1.2' }}>
                   {user?.firstName} {user?.lastName}
@@ -188,6 +277,17 @@ const TopNavBar = () => {
                     </div>
                   </button>
                 )}
+
+                <button
+                  className="dropdown-item d-flex align-items-center py-2"
+                  onClick={() => handleNavigation('/settings')}
+                >
+                  <i className="bi bi-gear me-3 text-secondary" style={{ fontSize: '18px' }}></i>
+                  <div>
+                    <div className="fw-semibold">Settings</div>
+                    <div className="text-muted small">Preferences and configuration</div>
+                  </div>
+                </button>
 
                 <div className="dropdown-divider"></div>
 

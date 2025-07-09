@@ -126,53 +126,6 @@ const Dashboard = () => {
   return (
     <div className="min-vh-100 bg-light">
       {/* Navigation Header */}
-      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div className="container-fluid">
-          <span className="navbar-brand">
-            <i className="bi bi-building me-2"></i>
-            HRM System
-          </span>
-          
-          <div className="navbar-nav ms-auto">
-            <div className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle d-flex align-items-center"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-              >
-                <i className={`bi ${getRoleIcon(user?.role)} me-2`}></i>
-                {user?.firstName} {user?.lastName}
-              </a>
-              <ul className="dropdown-menu dropdown-menu-end">
-                <li>
-                  <span className="dropdown-item-text">
-                    <small className="text-muted">Role: {user?.role}</small>
-                  </span>
-                </li>
-                <li><hr className="dropdown-divider" /></li>
-                <li>
-                  <a className="dropdown-item" href="#" onClick={(e) => e.preventDefault()}>
-                    <i className="bi bi-person me-2"></i>Profile
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#" onClick={(e) => e.preventDefault()}>
-                    <i className="bi bi-gear me-2"></i>Settings
-                  </a>
-                </li>
-                <li><hr className="dropdown-divider" /></li>
-                <li>
-                  <button className="dropdown-item" onClick={handleLogout}>
-                    <i className="bi bi-box-arrow-right me-2"></i>Logout
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Main Content */}
       <div className="container-fluid py-4">
         {/* Welcome Section */}

@@ -56,6 +56,16 @@ export const userAPI = {
   getRoles: () => api.get('/users/roles'),
 };
 
+// Department API calls
+export const departmentAPI = {
+  getAllDepartments: (params) => api.get('/departments', { params }),
+  getDepartmentById: (id) => api.get(`/departments/${id}`),
+  createDepartment: (departmentData) => api.post('/departments', departmentData),
+  updateDepartment: (id, departmentData) => api.put(`/departments/${id}`, departmentData),
+  deleteDepartment: (id) => api.delete(`/departments/${id}`),
+  getDepartmentStats: () => api.get('/departments/stats'),
+};
+
 // Health check
 export const healthAPI = {
   check: () => api.get('/health'),
