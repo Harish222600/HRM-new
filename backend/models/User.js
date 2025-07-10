@@ -62,9 +62,8 @@ const userSchema = new mongoose.Schema({
     default: 'Employee'
   },
   department: {
-    type: String,
-    trim: true,
-    maxlength: [100, 'Department cannot exceed 100 characters']
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Department'
   },
   designation: {
     type: String,

@@ -8,6 +8,9 @@ import MyProfile from './components/MyProfile';
 import Dashboard from './components/Dashboard';
 import DepartmentManagement from './components/admin/DepartmentManagement';
 import UserManagement from './components/admin/UserManagement';
+import TeamManagement from './components/admin/TeamManagement';
+import MyTeamDashboard from './components/MyTeamDashboard';
+import MyManagedTeamsDashboard from './components/MyManagedTeamsDashboard';
 
 
 function App() {
@@ -68,6 +71,42 @@ function App() {
                   </Layout>
                 </ProtectedRoute>
               } 
+            />
+            
+            {/* Team Management Routes */}
+            <Route
+              path="/admin/teams"
+              element={
+                <ProtectedRoute requiredRoles={['Admin', 'Vice President', 'HR BP', 'HR Manager', 'HR Executive', 'Team Manager', 'Team Leader']}>
+                  <Layout>
+                    <TeamManagement />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* My Team Dashboard for Team Leaders */}
+            <Route
+              path="/my-team"
+              element={
+                <ProtectedRoute requiredRoles={['Team Leader']}>
+                  <Layout>
+                    <MyTeamDashboard />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* My Teams Dashboard for Team Managers */}
+            <Route
+              path="/my-teams"
+              element={
+                <ProtectedRoute requiredRoles={['Team Manager']}>
+                  <Layout>
+                    <MyManagedTeamsDashboard />
+                  </Layout>
+                </ProtectedRoute>
+              }
             />
                       {/* Leave & Attendance Routes */}
             <Route 

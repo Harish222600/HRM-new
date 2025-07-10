@@ -58,6 +58,26 @@ const Sidebar = ({ isOpen, onToggle }) => {
       });
     }
 
+    // Team Management for Team Managers
+    if (hasRole('Team Manager')) {
+      menuItems.push({
+        key: 'my-teams',
+        title: 'My Teams',
+        icon: 'bi-diagram-3',
+        path: '/my-teams'
+      });
+    }
+
+    // Team Management for Team Leaders
+    if (hasRole('Team Leader')) {
+      menuItems.push({
+        key: 'my-team',
+        title: 'My Team',
+        icon: 'bi-people',
+        path: '/my-team'
+      });
+    }
+
     // Leave & Attendance Management
     if (hasAnyRole(['Admin', 'Vice President', 'HR BP', 'HR Manager', 'HR Executive', 'Team Manager', 'Team Leader'])) {
       const leaveSubmenu = [

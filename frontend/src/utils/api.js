@@ -78,6 +78,19 @@ export const departmentAPI = {
   getDepartmentStats: () => api.get('/departments/stats'),
 };
 
+// Team API calls
+export const teamAPI = {
+  getAllTeams: (params) => api.get('/teams', { params }),
+  getTeamById: (id) => api.get(`/teams/${id}`),
+  createTeam: (teamData) => api.post('/teams', teamData),
+  updateTeam: (id, teamData) => api.put(`/teams/${id}`, teamData),
+  deleteTeam: (id) => api.delete(`/teams/${id}`),
+  addTeamMember: (teamId, memberData) => api.post(`/teams/${teamId}/members`, memberData),
+  removeTeamMember: (teamId, userId) => api.delete(`/teams/${teamId}/members/${userId}`),
+  getMyManagedTeams: () => api.get('/teams/my-teams'),
+  getMyTeam: () => api.get('/teams/my-team'),
+};
+
 // Health check
 export const healthAPI = {
   check: () => api.get('/health'),
