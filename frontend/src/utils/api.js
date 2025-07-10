@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5001/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -63,6 +63,7 @@ export const departmentAPI = {
   createDepartment: (departmentData) => api.post('/departments', departmentData),
   updateDepartment: (id, departmentData) => api.put(`/departments/${id}`, departmentData),
   deleteDepartment: (id) => api.delete(`/departments/${id}`),
+  toggleDepartmentStatus: (id, isActive) => api.put(`/departments/${id}`, { isActive }),
   getDepartmentStats: () => api.get('/departments/stats'),
 };
 

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('../models/User');
+const Department = require('../models/Department');
 
 const roles = [
   'Admin',
@@ -26,6 +27,13 @@ const createDummyUsers = async () => {
       console.log('Using existing MongoDB connection for dummy user creation');
     }
 
+    // Fetch all departments and create a map of name to _id
+    const departments = await Department.find({});
+    const departmentMap = {};
+    departments.forEach(dept => {
+      departmentMap[dept.name] = dept._id;
+    });
+
     for (let i = 0; i < roles.length; i++) {
       const role = roles[i];
       const email = role.toLowerCase().replace(/ /g, '') + '@company.com';
@@ -38,13 +46,16 @@ const createDummyUsers = async () => {
       // Create unique employeeId
       const employeeId = role.replace(/ /g, '').substring(0, 3).toUpperCase() + String(i + 1).padStart(3, '0');
 
+      // Determine department name string
+      const departmentName = role.includes('HR') ? 'Human Resources' : role.includes('Team') ? 'Engineering' : role === 'Employee' ? 'Operations' : 'Management';
+
       const user = new User({
         email,
         password: 'password123',
         firstName: role.split(' ')[0],
         lastName: 'User',
         role,
-        department: role.includes('HR') ? 'Human Resources' : role.includes('Team') ? 'Engineering' : role === 'Employee' ? 'Operations' : 'Management',
+        department: departmentMap[departmentName] || null,
         teamName: role.includes('Team') ? 'Development Team Alpha' : role.includes('HR') ? 'HR Operations' : role === 'Employee' ? 'Operations Team' : 'Executive Team',
         employeeId,
         phoneNumber: `+1-555-${String(Math.floor(Math.random() * 9000) + 1000)}`,
