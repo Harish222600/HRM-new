@@ -272,11 +272,11 @@ const updateTeam = async (req, res) => {
 
     // Team Managers can only edit certain fields
     if (user.role === 'Team Manager') {
-      // Team Managers can only update description and manage members
-      if (name || teamManager || teamLeader || maxSize !== undefined || isActive !== undefined) {
+      // Team Managers can update description, maxSize, and teamLeader, but not name, teamManager, or isActive
+      if (name || teamManager || isActive !== undefined) {
         return res.status(403).json({
           success: false,
-          message: 'Team Managers can only update team description and manage members.'
+          message: 'Team Managers can only update team description, max team size, and team leader.'
         });
       }
     }
@@ -329,6 +329,10 @@ const updateTeam = async (req, res) => {
       if (teamLeader !== undefined) updateData.teamLeader = teamLeader || null;
       if (maxSize !== undefined) updateData.maxSize = maxSize;
       if (isActive !== undefined) updateData.isActive = isActive;
+    } else {
+      // Team Managers can update description, maxSize, and teamLeader
+      if (teamLeader !== undefined) updateData.teamLeader = teamLeader || null;
+      if (maxSize !== undefined) updateData.maxSize = maxSize;
     }
     
     // Both Admin/HR and Team Managers can update description
