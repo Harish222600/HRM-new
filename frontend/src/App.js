@@ -7,6 +7,8 @@ import Login from './components/Login';
 import MyProfile from './components/MyProfile';
 import Dashboard from './components/Dashboard';
 import DepartmentManagement from './components/admin/DepartmentManagement';
+import UserManagement from './components/admin/UserManagement';
+
 
 function App() {
   return (
@@ -60,28 +62,14 @@ function App() {
             <Route 
               path="/admin/users" 
               element={
-                <ProtectedRoute requiredRoles={['Admin', 'Vice President', 'HR BP', 'HR Manager', 'HR Executive']}>
+                <ProtectedRoute requiredRoles={['Admin', 'Vice President', 'HR BP', 'HR Manager', 'HR Executive', 'Team Manager', 'Team Leader', 'Employee']}>
                   <Layout>
-                    <div className="container-fluid">
-                      <div className="alert alert-info">
-                        <h4><i className="bi bi-people me-2"></i>User Management</h4>
-                        <p>This module will include:</p>
-                        <ul>
-                          <li>View all users with advanced filtering</li>
-                          <li>Add new employees with role assignment</li>
-                          <li>Edit user profiles and permissions</li>
-                          <li>Bulk user operations</li>
-                          <li>User activity tracking</li>
-                        </ul>
-                        <p className="mb-0"><strong>Status:</strong> <span className="badge bg-warning">In Development</span></p>
-                      </div>
-                    </div>
+                    <UserManagement />
                   </Layout>
                 </ProtectedRoute>
               } 
             />
-
-            {/* Leave & Attendance Routes */}
+                      {/* Leave & Attendance Routes */}
             <Route 
               path="/admin/leave/*" 
               element={

@@ -31,15 +31,14 @@ const Sidebar = ({ isOpen, onToggle }) => {
       roles: ['Admin', 'Vice President', 'HR BP', 'HR Manager', 'HR Executive', 'Team Manager', 'Team Leader', 'Employee']
     });
 
-    // User Management - Admin, VP, HR roles
-    if (hasAnyRole(['Admin', 'Vice President', 'HR BP', 'HR Manager', 'HR Executive'])) {
+    // User Management - Admin, VP, HR roles, Team Leaders, Team Managers
+    if (hasAnyRole(['Admin', 'Vice President', 'HR BP', 'HR Manager', 'HR Executive', 'Team Manager', 'Team Leader'])) {
       menuItems.push({
         key: 'user-management',
         title: 'User Management',
         icon: 'bi-people',
         submenu: [
           { title: 'All Users', path: '/admin/users', icon: 'bi-person-lines-fill' },
-          { title: 'Add User', path: '/admin/users/add', icon: 'bi-person-plus' },
           { title: 'User Roles', path: '/admin/users/roles', icon: 'bi-person-badge' }
         ]
       });

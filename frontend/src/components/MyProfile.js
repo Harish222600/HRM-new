@@ -543,6 +543,25 @@ const MyProfile = () => {
     }
   };
 
+  // Listen for section changes from ProfileSidebar
+  useEffect(() => {
+    const handleSectionChange = (section) => {
+      setActiveTab(section);
+    };
+
+    window.profileSectionChange = handleSectionChange;
+
+    // Check URL hash for initial section
+    const hash = window.location.hash.replace('#', '');
+    if (hash && tabs.find(tab => tab.id === hash)) {
+      setActiveTab(hash);
+    }
+
+    return () => {
+      delete window.profileSectionChange;
+    };
+  }, []);
+
   return (
     <div className="container-fluid py-4">
       <div className="row">
@@ -560,30 +579,11 @@ const MyProfile = () => {
       </div>
 
       <div className="row">
-        <div className="col-lg-3 col-md-4 mb-4">
-          <div className="card">
-            <div className="card-header">
-              <h6 className="mb-0">Profile Sections</h6>
-            </div>
-            <div className="list-group list-group-flush">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  className={`list-group-item list-group-item-action ${activeTab === tab.id ? 'active' : ''}`}
-                  onClick={() => setActiveTab(tab.id)}
-                >
-                  <span className="me-2">{tab.icon}</span>
-                  {tab.label.replace(/^\S+\s/, '')}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="col-lg-9 col-md-8">
+        <div className="col-12">
           <div className="card">
             <div className="card-header">
               <h5 className="mb-0">
+                <span className="me-2">{tabs.find(tab => tab.id === activeTab)?.icon}</span>
                 {tabs.find(tab => tab.id === activeTab)?.label}
               </h5>
             </div>
